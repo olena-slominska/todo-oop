@@ -1,0 +1,117 @@
+/* The container */
+/* .container {
+    display: flex;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  } */
+
+/* Hide the browser's default checkbox */
+/* .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+
+  }
+   */
+/* Create a custom checkbox */
+/* .checkmark {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: 25px;
+    width: 25px;
+   
+    border-radius: 50%;
+    color: hsl(236, 33%, 92%);
+
+    align-items: center;
+	background: hsl(236, 33%, 92%);
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	transition: background .5s ease;
+	width: 100%;
+    background-image: linear-gradient(hsl(192, 100%, 67%),hsl(280, 87%, 65%));
+
+  } */
+
+/* On mouse-over, add a grey background color */
+/* .container:hover input ~ .checkmark {
+  } */
+
+/* When the checkbox is checked, add a blue background */
+/* .container input:checked ~ .checkmark {
+    background-color: transparent;
+  } */
+
+/* Create the checkmark/indicator (hidden when not checked) */
+/* .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  } */
+
+/* Show the checkmark when checked */
+/* .container input:checked ~ .checkmark:after {
+    display: flex;
+  } */
+
+/* Style the checkmark/indicator */
+/* .container .checkmark:after {
+   
+   background-image: url('../images/icon-check.svg');
+   
+  } */
+.container {
+  display: block;
+  padding: 10px;
+}
+.checkBox {
+  display: none;
+}
+.checkBox:checked ~ .checkmark::after {
+  background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+}
+.checkBox ~ .checkmark {
+  z-index: 3;
+  cursor: pointer;
+  padding-left: 33px;
+  display: block;
+  position: relative;
+  height: 20px;
+  line-height: 1.7em;
+}
+.checkBox::before {
+  z-index: 2;
+  top: 0px;
+  left: 2px;
+  width: 25px;
+  height: 25px;
+  background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+  display: block;
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+.checkBox::after {
+  z-index: 2;
+  top: 2px;
+  left: 4px;
+  width: 21px;
+  height: 21px;
+  background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+  display: block;
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}

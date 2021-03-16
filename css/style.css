@@ -1,0 +1,212 @@
+body {
+  --bg-color: hsl(235, 21%, 11%);
+  --listBg-color: hsl(235, 24%, 19%);
+  --prim-color: hsl(234, 39%, 85%);
+  --primHover-color: hsl(236, 33%, 92%);
+  --secondHover-color: hsl(234, 11%, 52%);
+  --footer-color: hsl(233, 14%, 35%);
+  --second-color: hsl(237, 14%, 26%);
+  --bright-blue: hsl(220, 98%, 61%);
+  --bg-img: url("../images/bg-desktop-dark.jpg");
+  --mode-btn: url("../images/icon-sun.svg");
+}
+.light-theme {
+  --listBg-color: hsl(0, 0%, 98%);
+  --listBg-color: hsl(236, 33%, 92%);
+  --bg-color: hsl(233, 11%, 84%);
+  --second-color: hsl(236, 9%, 61%);
+  --prim-color: hsl(235, 19%, 35%);
+  --bg-img: url("../images/bg-desktop-light.jpg");
+  --mode-btn: url("../images/icon-moon.svg");
+}
+.wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 18px;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 400;
+  background: var(--bg-color);
+  color: var(--prim-color);
+}
+
+header {
+  width: 100vw;
+  height: 40vh;
+
+  background: var(--bg-img);
+  background-size: cover;
+}
+main {
+  position: absolute;
+  top: 6em;
+  left: 30%;
+  width: 40%;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.todo-header {
+  width: 100%;
+  height: 5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.todo-header_title {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+}
+.todo-header_btn {
+  background: var(--mode-btn) no-repeat;
+  object-fit: cover;
+  width: 2em;
+  height: 2em;
+}
+.todo-header_btn:hover {
+  cursor: pointer;
+}
+
+.wrapper3 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-new {
+  width: 100%;
+  padding: 0.5em;
+  border: none;
+  border-radius: 2px;
+  background: var(--listBg-color);
+  outline: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.todo-new_input {
+  width: 100%;
+  height: 100%;
+  color: var(--prim-color);
+  background: transparent;
+  border: none;
+  outline: none;
+  caret-color: var(--bright-blue);
+  margin-left: 1em;
+}
+.todo-new_input:focus {
+  outline: none;
+}
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--second-color);
+  padding: 0 0.5em;
+}
+.todo-list {
+  margin-top: 1.5em;
+  width: 100%;
+  background: var(--listBg-color);
+  border-radius: 2px;
+}
+.todo {
+  width: 100%;
+  height: 3em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--second-color);
+  padding: 0.5em;
+  border-radius: 2px;
+}
+input[type="checkbox"] {
+  display: none;
+}
+label {
+  width: 10%;
+  cursor: pointer;
+  padding: 0 0.5em;
+}
+.active {
+  position: relative;
+  background-image: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+}
+.active::before {
+  content: url("../images/icon-check.svg");
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+}
+
+.todo-text {
+  padding: 0 0.5em;
+}
+.delete {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background: url("../images/icon-cross.svg") no-repeat;
+  border: none;
+  padding: 0 0.5em;
+}
+.lineThrough {
+  text-decoration: line-through;
+}
+
+.todo-list_footer {
+  width: 100%;
+  background: var(--listBg-color);
+  height: 4em;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  padding: 0 0.5em;
+}
+.todo-list_footer div {
+  padding: 0 0.5em;
+}
+.filters {
+  background: var(--listBg-color);
+  height: 4em;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+footer {
+  width: 100%;
+  height: 4em;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 0.8em;
+  padding: 5px;
+}
+@media screen and (max-width: 900px) {
+  main {
+    width: 80%;
+    left: 10%;
+  }
+}
+@media screen and (max-width: 500px) {
+  main {
+    width: 90%;
+    left: 5%;
+  }
+}

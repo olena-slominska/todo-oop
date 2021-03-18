@@ -198,6 +198,9 @@ footer {
   font-size: 0.8em;
   padding: 5px;
 }
+.hidden {
+  display: none;
+}
 @media screen and (max-width: 900px) {
   main {
     width: 80%;

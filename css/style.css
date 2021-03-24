@@ -9,6 +9,7 @@ body {
   --bright-blue: hsl(220, 98%, 61%);
   --bg-img: url("../images/bg-desktop-dark.jpg");
   --mode-btn: url("../images/icon-sun.svg");
+  transition: color 0.2s ease-out, background 0.2s ease-out;
 }
 .light-theme {
   --listBg-color: hsl(0, 0%, 98%);
@@ -19,6 +20,7 @@ body {
   --bg-img: url("../images/bg-desktop-light.jpg");
   --mode-btn: url("../images/icon-moon.svg");
 }
+
 .wrapper {
   position: relative;
   width: 100%;
@@ -181,6 +183,9 @@ label {
 }
 .todo-list_footer div {
   padding: 0 0.5em;
+}
+.clear-completed, .show-completed, .show-active, .show-all {
+cursor: pointer;
 }
 .filters {
   background: var(--listBg-color);

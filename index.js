@@ -16,16 +16,6 @@ class Model {
   bindModeBtnClicked(callback) {
     this.onModeBtnClicked = callback;
   }
-  bindClearCompletedClicked(callback) {
-    this.onClearCompletedClicked = callback;
-  }
-  _commit(todos, modeBtn, clearCompleted) {
-    this.onTodoListChanged(todos);
-    this.onModeBtnClicked(modeBtn);
-    this.onClearCompletedClicked(clearCompleted);
-    localStorage.setItem("todos", JSON.stringify(todos));
-    localStorage.setItem("count", JSON.stringify(this.count));
-  }
 
   addTodo(todoText) {
     const todo = {
@@ -43,6 +33,29 @@ class Model {
   deleteTodo(id) {
     this.todos = this.todos.filter((todo) => todo.id !== id);
 
+    this._commit(this.todos);
+  }
+
+  _commit(todos, modeBtn) {
+    this.onTodoListChanged(todos);
+    this.onModeBtnClicked(modeBtn);
+    localStorage.setItem("todos", JSON.stringify(todos));
+    localStorage.setItem("count", JSON.stringify(this.count));
+  }
+  _clearCompleted() {
+    this.todos = this.todos.filter((todo) => todo.complete === false);
+    this._commit(this.todos);
+  }
+
+  _filterCompleted() {
+    const todosComplete = this.todos.filter((todo) => todo.complete === true);
+    this._commit(todosComplete);
+  }
+  _filterActive() {
+    const todosActive = this.todos.filter((todo) => todo.complete == false);
+    this._commit(todosActive);
+  }
+  _showAll() {
     this._commit(this.todos);
   }
 
@@ -99,9 +112,9 @@ class View {
     this.modeBtn = this.getElement(".todo-header_btn");
     this.itemsCount = this.getElement(".items-count");
     this.clearCompleted = this.getElement(".clear-completed");
-    this.showAll = this.getElement(".filter:nth-child(1)");
-    this.filterActive = this.getElement(".filter:nth-child(2)");
-    this.filterCompleted = this.getElement(".filter:nth-child(3)");
+    this.showAll = this.getElement(".show-all");
+    this.filterActive = this.getElement(".show-active");
+    this.filterCompleted = this.getElement(".show-completed");
 
     this.inputDiv = this.createElement("div", "todo-new");
     this.input = this.createElement("input", "todo-new_input");
@@ -173,6 +186,7 @@ class View {
       this.todoList.append(todoItem);
     });
   }
+
   updateCount(todos) {
     this.count = todos.filter((todo) => todo.complete === false).length;
     this.itemsCount.textContent = `${this.count} items left`;
@@ -183,39 +197,34 @@ class View {
       document.body.classList.toggle("light-theme");
     });
   }
-  _clearCompleted(todos) {
-    this.clearCompleted.addEventListener("click", (e) => {
-      e.preventDefault;
-      this.todos.forEach((todo) => {
-        if (todo.complete) {
-          todo.remove();
-        }
-      });
-    });
-  }
-  // showAll(todos) {
-  //   todos.forEach((todo) => todo.classList.remove("hidden"));
-  // }
-  // filterCompleted(todos) {
-  //   todos.forEach((todo) => {
-  //     if (!todo.complete) {
-  //       todo.classList.add("hidden");
-  //     }
-  //   });
-  // }
-  // filterActive(todos) {
-  //   todos.forEach((todo) => {
-  //     if (todo.complete) {
-  //       todo.classList.add("hidden");
-  //     }
-  //   });
-  // }
+
   bindAddTodo(handler) {
     this.input.addEventListener("keyup", (e) => {
-      if (this._todoText && (e.key === "Enter" || e.keyCode === 13)) {
+      if (this._todoText && e.key === "Enter") {
         handler(this._todoText);
         this._resetInput();
       }
+    });
+  }
+
+  bindClearCompletedClicked(handler) {
+    this.clearCompleted.addEventListener("click", () => {
+      handler();
+    });
+  }
+  bindFilterCompletedClicked(handler) {
+    this.filterCompleted.addEventListener("click", () => {
+      handler();
+    });
+  }
+  bindFilterActiveClicked(handler) {
+    this.filterActive.addEventListener("click", () => {
+      handler();
+    });
+  }
+  bindShowAllClicked(handler) {
+    this.showAll.addEventListener("click", () => {
+      handler();
     });
   }
 
@@ -270,7 +279,11 @@ class Controller {
     // Explicit this binding
     this.model.bindTodoListChanged(this.onTodoListChanged);
     this.model.bindModeBtnClicked(this.onModeBtnClicked);
-    this.model.bindClearCompletedClicked(this.onClearCompletedClicked);
+
+    this.view.bindClearCompletedClicked(this.handleClearCompletedClicked);
+    this.view.bindFilterCompletedClicked(this.handleFilterCompletedClicked);
+    this.view.bindFilterActiveClicked(this.handleFilterActiveClicked);
+    this.view.bindShowAllClicked(this.handleShowAllClicked);
 
     this.view.bindAddTodo(this.handleAddTodo);
     this.view.bindDeleteTodo(this.handleDeleteTodo);
@@ -280,22 +293,26 @@ class Controller {
 
     this.onTodoListChanged(this.model.todos);
     this.onModeBtnClicked(this.model.modeBtn);
-    this.onClearCompletedClicked(this.model.clearCompleted);
   }
 
   onTodoListChanged = (todos) => {
     this.view.displayTodos(todos);
     this.view.updateCount(todos);
-    // this.view._clearCompleted(todos);
-    // this.view.showAll(todos);
-    // this.view.filterCompleted(todos);
-    // this.view.filterActive(todos);
   };
   onModeBtnClicked = () => {
     this.view.changeTheme();
   };
-  onClearCompletedClicked = (todos) => {
-    this.view._clearCompleted(todos);
+  handleClearCompletedClicked = () => {
+    this.model._clearCompleted();
+  };
+  handleFilterCompletedClicked = () => {
+    this.model._filterCompleted();
+  };
+  handleFilterActiveClicked = () => {
+    this.model._filterActive();
+  };
+  handleShowAllClicked = () => {
+    this.model._showAll();
   };
 
   handleAddTodo = (todoText) => {
